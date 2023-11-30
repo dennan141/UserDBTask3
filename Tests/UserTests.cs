@@ -1,4 +1,5 @@
 using Moq;
+using NUnit.Framework.Constraints;
 public class UserTests
 {
 
@@ -88,16 +89,30 @@ public class UserTests
     }
 
 
-
+    /// <summary>
+    /// Adds a new User to the database 
+    /// and checks if added a already existing user sends back false.
+    /// Some logic in UserManager.
+    /// </summary>
     [Test]
     public void TestAddUser()
     {
         //ARRANGE
         User newUser = new User("Brand new user");
+        User alreadyExistingUser = new User("A user that already exists");
+
+        mockDb.Setup(database => database.AddUser(newUser)).Returns(true);
+        mockDb.Setup(database => database.AddUser(alreadyExistingUser)).Returns(false);
         //ACT
-        userManager.AddUser(newUser);
+        var result = userManager.AddUser(newUser);
+        var alreadyExisitingUserResult = userManager.AddUser(alreadyExistingUser);
+
         //ASSERT
+        Assert.IsTrue(result);
+        Assert.IsFalse(alreadyExisitingUserResult);
+        //Checks that new user is called ONCE and that existing user is NEVER called.
         mockDb.Verify(database => database.AddUser(newUser), Times.Once);
+        mockDb.Verify(database => database.AddUser(alreadyExistingUser), Times.Never);
     }
 
 }
