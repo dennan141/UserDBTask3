@@ -15,3 +15,9 @@ Jag missförstod också först uppgiften eftersom jag inte förstod mocking och 
 I denna uppgiften använde jag mycket ChatGPT. Något jag inte gjort innan utan försökt hålla mig borta ifrån utan större anledning. Den hjälpte mycket med att förstå hur just mocking fungerar. 
 
 Testerna känns bra och hoppas det kommer mer större uppgifter där det ingår lite testning eller testdriven utveckling även om det är svårt att exmaniera vilken ordning man skrev uppgifter / metoder i. 
+
+Skall dock kommenteras att jag förtillfället skapat ett test per funktion men funderade om jag skulle delat upp det mer.
+Exempelvis TestGetUser_ThatExists()
+samt TestGetUser_ThatDoesNotExists()
+Detta för att skapa mer klarhet i vad som går fel om något inte går igenom ett test men valde slutligen att ha ett test per metod denna gången då felmeddelandet ändå visar vart testet misslyckas.
+Men kommer nog i framtiden på större projekt dela upp det mer för tydlighet och enkelhet. 
