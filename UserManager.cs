@@ -16,23 +16,12 @@ class UserManager : IDatabase
 
     /// <summary>
     /// Adds user to the "Database" If no other user already exists
-    /// Contains some logic for checking if a user already exists.
+    /// This is where GetUser should check
     /// </summary>
     /// <param name="user">An object of class User</param>
-    public bool AddUser(User user)
+    public void AddUser(User user)
     {
-        var foundUser = UserDatabase.GetUser(user.UserID);
-        if (foundUser == null)
-        {
-            UserDatabase.AddUser(user);
-            System.Console.WriteLine("Inside if");
-            return true;
-        }
-        else
-        {
-            System.Console.WriteLine("Outside if");
-            return false;
-        }
+        UserDatabase.AddUser(user);
     }
 
     /// <summary>
@@ -40,9 +29,10 @@ class UserManager : IDatabase
     /// </summary>
     /// <param name="userId">An int of the userID</param>
     /// <returns>Either a User if found or null</returns>
-    public User GetUser(int userId)
+    public User? GetUser(int userId)
     {
         return UserDatabase.GetUser(userId);
+
     }
 
     /// <summary>

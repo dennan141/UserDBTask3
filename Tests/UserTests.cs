@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using Moq;
 using NUnit.Framework.Constraints;
 public class UserTests
@@ -91,28 +92,18 @@ public class UserTests
 
     /// <summary>
     /// Adds a new User to the database 
-    /// and checks if added a already existing user sends back false.
-    /// Some logic in UserManager.
+    /// Does not check adding a user if already exists, 
+    /// this logic should be added in UserManager via GetUser().
     /// </summary>
     [Test]
     public void TestAddUser()
     {
         //ARRANGE
         User newUser = new User("Brand new user");
-        User alreadyExistingUser = new User("A user that already exists");
-
-        mockDb.Setup(database => database.AddUser(newUser)).Returns(true);
-        mockDb.Setup(database => database.AddUser(alreadyExistingUser)).Returns(false);
         //ACT
-        var result = userManager.AddUser(newUser);
-        var alreadyExisitingUserResult = userManager.AddUser(alreadyExistingUser);
-
+        userManager.AddUser(newUser);
         //ASSERT
-        Assert.IsTrue(result);
-        Assert.IsFalse(alreadyExisitingUserResult);
-        //Checks that new user is called ONCE and that existing user is NEVER called.
         mockDb.Verify(database => database.AddUser(newUser), Times.Once);
-        mockDb.Verify(database => database.AddUser(alreadyExistingUser), Times.Never);
     }
 
 }
